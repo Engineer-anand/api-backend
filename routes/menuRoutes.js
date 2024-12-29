@@ -15,8 +15,8 @@ router.get('/', async (req, res) => {
 })
 router.post('/', async (req, res) => {
     try {
-        const data =  req.body;
-        const newMenue =  new menus(data)
+        const data = req.body;
+        const newMenue = new menus(data)
         const response = await newMenue.save();
         console.log('data saved')
         res.status(200).json(response)
@@ -25,5 +25,21 @@ router.post('/', async (req, res) => {
         res.status(500).json({ error: 'internal server error' })
     }
 })
+router.get('/:tastes', async (req, res) => {
+    try {
+        const tastes = req.params.tastes;
+        if (tastes == 'sweet' || tastes == 'bitter' || tastes == 'spicy') {
+            const response = await menus.find({ taste:tastes })
+            console.log(`Data is feched, you ordered type is ${tastes}`)
+            res.status(200).json(response)
+        } else {
+            res.status(404).json({ error: 'invalid params' })
+        }
 
-module.exports=router
+    } catch (error) {
+        console.log('error', error)
+        res.status(500).json({ error: 'internal server error' })
+    }
+})
+
+module.exports = router

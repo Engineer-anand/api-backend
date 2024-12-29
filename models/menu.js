@@ -8,7 +8,8 @@ const menuSchema=mongoose.Schema({
         type:String
     },
     taste:{
-        type:String
+        type:String,
+        enum:['sweet','bitter','spicy']
     },  
     price:{
         type:String
