@@ -1,17 +1,24 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const db = require('./db'); // Assuming this connects to the database (MongoDB, MySQL, etc.)
+
 const app = express();
-const db = require('./db');
-const bodyparser = require('body-parser')
-app.use(bodyparser.json());
+
+// Middleware for parsing JSON and handling CORS
+app.use(bodyParser.json());
+app.use(cors());
+
+// Routes
+const animeRoutes = require('./routes/animeRoutes');
+const personRoutes = require('./routes/personRouts');
+const menuRoutes = require('./routes/menuRoutes');
 
 
-app.get('/', (req, res) => {
-    res.send("here is my website and you can get all anime information from this website");
-})
- const animeRoutes= require('./routes/animeRoutes')
- const personRoutes= require('./routes/personRouts')
+// Routes setup with appropriate prefixes
+app.use('/animes', animeRoutes);
+app.use('/person', personRoutes);
+app.use('/menu', menuRoutes);
 
- app.use('/animes',animeRoutes)
- app.use('/person',personRoutes)
-
+// Home route
 app.listen(3000)

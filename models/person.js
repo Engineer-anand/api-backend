@@ -26,4 +26,6 @@ const personSchema=mongoose.Schema(
         }
     }
 )
-module.exports=personSchema;
+const persons=mongoose.model('persons',personSchema)
+
+module.exports=persons;
